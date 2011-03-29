@@ -10,6 +10,9 @@ class KongregatePlatform extends Platform {
 	protected static $KREDS_ITEMS;
 
 	public function __construct($config) {
+	  if(empty($config['api_host'])){
+	    $config['api_host'] = 'http://www.kongregate.com/api'; 
+	  } 
 		$this->config = $config;
 
 		self::$KREDS_ITEMS['wb-60'] = 60;
@@ -88,7 +91,7 @@ class KongregatePlatform extends Platform {
 
 	public function isValidAuthToken($user_id, $authToken) {
 		$appsecret = $this->config['app_secret'];
-		$authURL = "http://www.kongregate.com/api/authenticate.json?user_id=$user_id&game_auth_token=$authToken&api_key=$appsecret";
+		$authURL = "{$this->config['api_host']}/authenticate.json?user_id=$user_id&game_auth_token=$authToken&api_key=$appsecret";
 		$result = self::getRemoteData($authURL);
 		return ($result['success'] == true);
 	}
@@ -213,7 +216,7 @@ class KongregatePlatform extends Platform {
 
 
 	protected function getKredsInventory() {
-		return self::getRemoteData("http://www.kongregate.com/api/user_items.json?api_key={$this->config['app_secret']}&user_id={$this->user}");
+		return self::getRemoteData("{$this->config['api_host']}/user_items.json?api_key={$this->config['app_secret']}&user_id={$this->user}");
 	}
 
 	protected function useKredItem($itemData) {
@@ -221,7 +224,7 @@ class KongregatePlatform extends Platform {
 		$app_secret = $this->config['app_secret'];
 		$item_id = $itemData['id'];
 		$item_ident = $itemData['identifier'];
-		$apiCall = "http://www.kongregate.com/api/use_item.json?api_key=$app_secret&id=$item_id&user_id={$this->user}&game_auth_token={$this->game_auth_token}";
+		$apiCall = "{$this->config['api_host']}/use_item.json?api_key=$app_secret&id=$item_id&user_id={$this->user}&game_auth_token={$this->game_auth_token}";
 		$result = self::getRemoteData($apiCall);
 
 		if ($result['success']) {
@@ -263,7 +266,7 @@ class KongregatePlatform extends Platform {
 	}
 
 	public function publishStats($key, $value) {
-		$apiCall = "http://www.kongregate.com/api/submit_statistics.json?api_key={$this->config['app_secret']}&user_id={$this->user}&game_auth_token={$this->game_auth_token}";
+		$apiCall = "{$this->config['api_host']}/submit_statistics.json?api_key={$this->config['app_secret']}&user_id={$this->user}&game_auth_token={$this->game_auth_token}";
 		$apiCall .= "&$key=$value";
 		$this->getRemoteData($apiCall);
 	}
