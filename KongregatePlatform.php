@@ -6,6 +6,7 @@ class KongregatePlatform extends Platform {
 	protected $config;
 	protected $user;
 	protected $game_auth_token;
+	public $items;
 
 	protected static $KREDS_ITEMS;
 
@@ -24,6 +25,7 @@ class KongregatePlatform extends Platform {
 	public function loadLibraries() {
 		$this->updateInventory();
 		$data = $this->getKredsInventory();
+		$this->items = $data['items'];
 		echo "<script type='text/javascript' src='http://www.kongregate.com/javascripts/kongregate_api.js'></script>";
 	}
 
