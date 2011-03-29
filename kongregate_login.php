@@ -6,7 +6,7 @@
 	<script type="text/javascript" src="http://www.kongregate.com/javascripts/kongregate_api.js"></script>
 </head>
 <body style='margin: 0px;width: 760px;height:580px;border:0px solid black;overflow:hidden;'>
-<a href='#' onclick='showMyLogin();'>
+<a href='#' onclick='showMyLogin();return false;'>
 	You need to login to play this game.
 </a>
 <script type="text/javascript">
