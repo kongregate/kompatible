@@ -9,6 +9,7 @@ class FacebookPlatform extends Platform {
 	protected $config;
 
 	public function __construct($config) {
+		$this->config = $config;
 		$this->facebook = new Facebook(array(
 											'appId' => $config['app_id'],
 											'secret' => $config['app_secret'],
@@ -17,9 +18,9 @@ class FacebookPlatform extends Platform {
 	}
 
 	public function loadLibraries() {
-		$sig = $this->getSessionParams();
-		?>
+	?>
 	<div id="fb-root"></div>
+	<div id="iframe_container" style="display:none"></div>
 	<script type="text/javascript">
 		var origPostTarget;
 		window.fbAsyncInit = function() {
@@ -64,7 +65,7 @@ class FacebookPlatform extends Platform {
 			data.attachment.media = [];
 			var i = 0;
 			for (var image in images) {
-				data.attachment.media[i] = {'type':'image','src':'<?= $this->config['image_root'] ?>/' + images[image],'href':link};
+				data.attachment.media[i] = {'type':'image','src':'images/' + images[image],'href':link};
 				i++;
 			}
 			FB.ui(data, function(response) {
@@ -74,25 +75,15 @@ class FacebookPlatform extends Platform {
 			var attachment = {'media':[], 'name':title, 'caption':body};
 
 		}
-
 		function showInvitePopup() {
-			document.getElementById('iframe_container').innerHTML = "<iframe id='syn_iframe' style='border: none;' height='630' width='100%' frameborder='0' scrolling='no' allowtransparency='true' src='request.php?<?=$sig?>'></iframe>";
-			$('#iframe_container').show();
+			FB.ui({method: 'apprequests',
+				   message: 'You should learn more about this awesome game.',
+				   display: 'iframe',
+				   data: 'trackingdata'});
 		}
 
-		function showGiftPopup() {
-			document.getElementById('iframe_container').innerHTML = "<iframe id='syn_iframe' style='border: none;' height='630' width='100%' frameborder='0' scrolling='no' allowtransparency='true' src='request.php?type=gift&<?=$sig?>'></iframe>";
-			$('#iframe_container').show();
-		}
-		function closeIframePopup() {
-			$('#iframe_container').hide();
-			document.getElementById('iframe_container').innerHTML = "";
-			return false;
-		}
 	</script>
-
 	<?php
-
 	}
 
 	public function getSessionParams() {
@@ -114,14 +105,6 @@ class FacebookPlatform extends Platform {
 		$logoutUrl = $this->facebook->getLogoutUrl();
 		echo "<a href='$logoutUrl'>";
 		echo "<img src='http://static.ak.fbcdn.net/rsrc.php/z2Y31/hash/cxrz4k7j.gif'></a>";
-	}
-
-	public function displayHeader() {
-
-	}
-
-	public function displayFooter() {
-
 	}
 
 	public function getFlashHeight() {
@@ -363,10 +346,6 @@ class FacebookPlatform extends Platform {
 		}
 	}
 
-	public function updateInventory() {
-		return true;
-	}
-
 	public function getFeaturedNews() {
 		$news = array();
 		$news[] = array('banner' => '5starreviewnewsbanner.png', 'link' => 'http://www.facebook.com/apps/application.php?id=130193190327885&v=app_6261817190');
@@ -375,10 +354,7 @@ class FacebookPlatform extends Platform {
 	}
 
 	public function displayProfilePicture($user_id) {
-		?>
-	<img src="http://graph.facebook.com/<?=$user_id?>/picture" height='50' width='50'/>
-	<?php
-
+		echo "<img src='http://graph.facebook.com/<?=$user_id?>/picture' height='50' width='50'/>";
 	}
 
 	public function getEmail($uid) {
@@ -429,28 +405,11 @@ class FacebookPlatform extends Platform {
 		return $uid;
 	}
 
-	// Stubbed
-	public function addUserActivity($data) {
-
-	}
-
-	public function publishUserAction($data) {
-
-	}
-
-	public function displayInviteBox($data) {
-
-	}
-
-	public function publishStats($key, $value) {
-
-	}
-
 	public function isFeatureEnabled($feature) {
-		/*switch($feature) {
-		 case 'boosts':
-		 return false;
-		 }*/
+		switch($feature) {
+			case"stats":
+				return false;
+		}
 		return true;
 	}
 
