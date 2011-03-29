@@ -29,14 +29,6 @@ class KongregatePlatform extends Platform {
 		echo "<script type='text/javascript' src='http://www.kongregate.com/javascripts/kongregate_api.js'></script>";
 	}
 
-	public function displayHeader() {
-
-	}
-
-	public function displayFooter() {
-
-	}
-
 	public function getFlashHeight() {
 		return 580;
 	}
@@ -118,14 +110,6 @@ class KongregatePlatform extends Platform {
 		return true;
 	}
 
-	public function displayLogin() {
-
-	}
-
-	public function displayLogout() {
-
-	}
-
 	public function getUser() {
 		if (!isset($this->user)) {
 			$this->user = $this->login();
@@ -136,18 +120,6 @@ class KongregatePlatform extends Platform {
 	public function getUserName() {
 		$name = $_REQUEST['kongregate_username'];
 		return $name;
-	}
-
-	public function addUserActivity($data) {
-
-	}
-
-	public function publishUserAction($data) {
-
-	}
-
-	public function displayInviteBox($data) {
-
 	}
 
 	public function getUserInfo($user_id, $fields) {
@@ -187,14 +159,6 @@ class KongregatePlatform extends Platform {
 		return true;
 	}
 
-	public function displayProfilePicture($user_id) {
-
-	}
-
-	public function displayName($user_id) {
-
-	}
-
 	public function getRequestListLink() {
 		return false;
 	}
@@ -215,7 +179,6 @@ class KongregatePlatform extends Platform {
 		global $_REQUEST;
 		return $_REQUEST['kongregate_username'];
 	}
-
 
 	protected function getKredsInventory() {
 		return self::getRemoteData("{$this->config['api_host']}/user_items.json?api_key={$this->config['app_secret']}&user_id={$this->user}");
@@ -261,11 +224,6 @@ class KongregatePlatform extends Platform {
 		return true;
 	}
 
-	public function getFeaturedNews() {
-		$news = array();
-		$news[] = array('banner' => '5star.jpg');
-		return $news;
-	}
 
 	public function publishStats($key, $value) {
 		$apiCall = "{$this->config['api_host']}/submit_statistics.json?api_key={$this->config['app_secret']}&user_id={$this->user}&game_auth_token={$this->game_auth_token}";
@@ -273,15 +231,13 @@ class KongregatePlatform extends Platform {
 		$this->getRemoteData($apiCall);
 	}
 
-
 	public function isFeatureEnabled($feature) {
-		/*switch($feature) {
-		 case 'boosts':
-		 return false;
-		 }*/
+		switch($feature) {
+		 case 'invites':
+		 	return false;
+		 }
 		return true;
 	}
 }
-
 
 ?>

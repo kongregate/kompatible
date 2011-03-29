@@ -5,16 +5,19 @@ abstract class Platform
 
     // AUTHENTICATION
     abstract public function loadLibraries();
+	abstract public function login();
+	abstract public function isLoggedIn();
+	abstract public function getUser();
+
     public function getSessionParams() {}
-    abstract public function getUser();
-    abstract public function login();
-    abstract public function isLoggedIn();
+
 
     // USER API CALLS
     abstract public function getUserName();
+	abstract public function getName($user_id);
+
     public function displayProfilePicture($user_id) {}
     public function displayName($user_id) {}
-    abstract public function getName($user_id);
 	abstract public function getUserInfo($user_id, $fields);
     abstract public function getFriends();
     abstract public function getFriendsAppUsers();
@@ -23,23 +26,22 @@ abstract class Platform
 	
     
     // LAYOUT/CONTENT
-    abstract public function displayLogin();
-    abstract public function displayLogout();
-    abstract public function displayHeader();
-    abstract public function displayFooter();
-
-    abstract public function getFlashHeight();
-    abstract public function getFlashParams();
-	abstract public function displayFlashFile();
-
-    abstract public function getRequestListLink();
-    abstract public function getAppInfoPage();
-    abstract public function getAppNewsfeedPage();
-    abstract public function getAppForums();
-    
 	abstract public function isFeatureEnabled($feature_id);
-    
+    public function displayLogin(){}
+    public function displayLogout(){}
+    public function displayHeader(){}
+    public function displayFooter(){}
 
+    public function getFlashHeight(){}
+    public function getFlashParams(){}
+	public function displayFlashFile(){}
+
+    public function getRequestListLink(){}
+    public function getAppInfoPage(){}
+    public function getAppNewsfeedPage(){}
+    public function getAppForums(){}
+    
+   
 	// PLATFORM API
     public function getEmail($uid){}
     public function getThirdPartyID($uid){}
