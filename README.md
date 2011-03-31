@@ -35,6 +35,19 @@ If your game needs to use the site specific javacript api (to submit stats, make
 
     $platform->loadLibraries();
 
+## Serving your game file
+
+For flash games, you should customize the $platform->getFlashParams() function. These are the parameters to pass along to the flash game itself.
+
+    public function getFlashParams() {
+    	$params = "&user_id={$this->user}";
+    	return $params;
+    }
+
+Then you can display the flash file in the page with:
+
+    $platform->displayFlashFile();
+
 ## Kongregate Microtransactions 
 
 KongregatePlatform.php is setup to check the api on first request to see if the user has purchased any items. 
@@ -59,19 +72,6 @@ Or if we want to use a single item on page load:
     $platform->useKredItem($itemData);
 
 The Kongregate microtransaction docs are here: [microtransactions api](http://www.kongregate.com/developer_center/docs/microtransaction-client-api "Transaction API Docs").
-
-## Serving your game file
-
-For flash games, you should customize the $platform->getFlashParams() function. These are the parameters to pass along to the flash game itself.
-
-    public function getFlashParams() {
-    	$params = "&user_id={$this->user}";
-    	return $params;
-    }
-
-Then you can display the flash file in the page with:
-    
-    $platform->displayFlashFile();
 
 ## Examples
 
