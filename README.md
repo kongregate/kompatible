@@ -8,7 +8,7 @@ Kongregate can serve games through your servers just like Facebook. Metal games,
 
 Handling kongregate and facebook credentials.
 
-Then you can get your game credentials from kongregate at /games/<username>/<game>/api. For the demo, you can put them in the top of index.php.
+Then you can get your game credentials from kongregate at /games/< username >/< game >/api. For the demo, you can put them in the top of index.php.
 
     if (isset($_REQUEST['platform']) && $_REQUEST['platform'] == "fb") {
       …
