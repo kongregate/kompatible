@@ -131,6 +131,46 @@ class FacebookPlatform extends Platform {
 	<?php
 
 	}
+	
+	public function showPurchaseButton() {
+	  ?>
+	  <div id="fb-root"></div>
+    <script src="http://connect.facebook.net/en_US/all.js"></script>
+    <p> <a onclick="placeOrder(); return false;">Buy Stuff</a></p>
+
+    <script> 
+        FB.init({appId: "162536733803732", status: true, cookie: true});
+
+        function placeOrder() {
+
+          // Assign an internal ID that points to a database record
+          var order_info = 'abc123';
+
+          // calling the API ...
+          var obj = {
+            method: 'pay',
+            order_info: order_info,
+            purchase_type: 'item'
+          };
+
+          FB.ui(obj, callback);
+        }
+
+        var callback = function(data) {
+          if (data['order_id']) {
+            return true;
+          } else {
+            //handle errors here
+            return false;
+          }
+        };
+
+        function writeback(str) {
+          document.getElementById('output').innerHTML=str;
+        }
+    </script>
+    <?php 
+  }
 
 	public function getRequestListLink() {
 		return "http://www.facebook.com/reqs.php#confirm_{$this->config['app_id']}" . "_0";

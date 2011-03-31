@@ -36,21 +36,7 @@ $user_id = $platform->login();
 <body>
 <?= $platform->displayHeader(); ?>
 <h1>Hello <?= $platform->getUserName() ?>!</h1>
-<span>Number of robots: <span id='number_of_robots'><?= count($platform->items); ?></span></span><br/>
-<a id='purchase_link' href='#' onclick='purchaseRobot();return false;'>Purchase robot</a>
-<script type="text/javascript">
-  function onLoadCompleted() {
-  	kongregate = kongregateAPI.getAPI();
-  }
-  
-  function purchaseRobot(){
-    kongregate.mtx.purchaseItems(["robot"], function(){
-      $('#number_of_robots').html(parseInt($('#number_of_robots').html())+1);
-    });
-  }
-  
-  kongregateAPI.loadAPI(onLoadCompleted);
-</script>
+<?= $platform->showPurchaseButton() ?>
 <?php if ($platform->isFeatureEnabled("invites")) { ?>
 <a onclick='showInvitePopup();' href="#">Invite a Friend!</a>
 <?php }?>

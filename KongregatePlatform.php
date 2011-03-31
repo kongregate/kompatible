@@ -15,11 +15,11 @@ class KongregatePlatform extends Platform {
 	    $config['api_host'] = 'http://www.kongregate.com/api'; 
 	  } 
 		$this->config = $config;
-
-		self::$KREDS_ITEMS['wb-60'] = 60;
-		self::$KREDS_ITEMS['wb-130'] = 130;
-		self::$KREDS_ITEMS['wb-350'] = 350;
-		self::$KREDS_ITEMS['wb-730'] = 730;
+		$game_items = $this->getGameItems();
+    foreach($game_items['items'] as $game_item){
+      $game_items[$game_item['name']] = $game_item['price'];
+    }
+		self::$KREDS_ITEMS = $game_items;
 	}
 
 	public function loadLibraries() {
@@ -33,8 +33,29 @@ class KongregatePlatform extends Platform {
 	}
 
 	public function displayFooter() {
-
 	}
+	
+	public function showPurchaseButton() {
+	  ?>
+	  <span>Number of robots: <span id='number_of_robots'><?= count($this->items); ?></span></span><br/>
+    <a id='purchase_link' href='#' onclick='purchaseRobot();return false;'>Purchase robot</a>
+    <script type="text/javascript">
+      function onLoadCompleted() {
+      	kongregate = kongregateAPI.getAPI();
+      }
+
+      function purchaseRobot(){
+        kongregate.mtx.purchaseItems(["robot"], function(){
+          $('#number_of_robots').html(parseInt($('#number_of_robots').html())+1);
+        });
+      }
+
+      if(kongregateAPI){
+      kongregateAPI.loadAPI(onLoadCompleted);
+    }
+    </script>
+    <?php
+  }
 
 	public function getFlashHeight() {
 		return 580;
