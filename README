@@ -1,1 +1,34 @@
-hello world!
+Putting a Facebook game on Kongregate
+
+Kongregate can serve games through your servers just like Facebook. Metal games, the producers of Tyrant, have given us some tips and code for handling both. With some small tweaks to your server, and some tweaks to your game, you can serve your game in both places.
+
+The code examples in this demo are in php from https://github.com/jimgreer/synapse
+
+Handling kongregate and facebook credentials:
+
+First, create a Kongregate game in iframe mode, using the url of index.php from synapse. Then you can get your game credentials from kongregate at /games/<username>/<game>/api. For the demo, you can put them in the top of index.php.
+
+if (isset($_REQUEST['platform']) && $_REQUEST['platform'] == "fb") {
+  …
+} else {
+  require_once("KongregatePlatform.php");
+  $config['app_id'] = "<id>";
+  $config['app_secret'] = "<api_key>";
+  $config['app_root'] = "";
+  $config['server_root'] = "<wherever your server is>";
+  $platform = new KongregatePlatform($config);
+}
+
+Handling user login
+
+The php api automatically shows a link to the kongregate login form if they aren’t logged in. You can change the content of this in kongregate_login.php. When they are successful, the example app just sends the user back to the main index.php.
+
+From there, we can access $platform for kongregate and facebook, for getting the user name, or user items.
+
+Handling microtransactions 
+
+The main example automatically requests the user item list from kongregate when the page loads with $platform->$getKredsInventory.  On the server side, we are automatically marking all items as used when the user loads the page, in order to cash them in.
+
+kreds_game example.
+
+link to transaction api docs. 

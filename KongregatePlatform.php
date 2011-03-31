@@ -29,6 +29,13 @@ class KongregatePlatform extends Platform {
 		echo "<script type='text/javascript' src='http://www.kongregate.com/javascripts/kongregate_api.js'></script>";
 	}
 
+	public function displayHeader() {
+	}
+
+	public function displayFooter() {
+
+	}
+
 	public function getFlashHeight() {
 		return 580;
 	}
@@ -180,12 +187,15 @@ class KongregatePlatform extends Platform {
 		return $_REQUEST['kongregate_username'];
 	}
 
+	protected function getGameItems() {
+		return self::getRemoteData("{$this->config['api_host']}/items.json?api_key={$this->config['app_secret']}&game_id={$this->config['app_id']}");
+	}
+
 	protected function getKredsInventory() {
 		return self::getRemoteData("{$this->config['api_host']}/user_items.json?api_key={$this->config['app_secret']}&user_id={$this->user}");
 	}
 
 	protected function useKredItem($itemData) {
-
 		$app_secret = $this->config['app_secret'];
 		$item_id = $itemData['id'];
 		$item_ident = $itemData['identifier'];
