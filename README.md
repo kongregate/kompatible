@@ -16,13 +16,13 @@ You'll need your application credentials from both Facebook and Kongregate. You 
       $platform = new KongregatePlatform($config);
     }
     
-An examples of this is in index.php.
+An example of this is in index.php.
 
 In your Facebook configuration, you'll want to add ?platform=fb to the end of your canvas address.
 
 ## User login
 
-The call to login a user is easy. If they aren't currently logged in with permissions to Kongregate or Facebook, they will be redirected to the login form.
+Then we'll want to make sure the user is logged in. If they aren't, they will be redirected to the login form.
 
     $platform->login();
     
