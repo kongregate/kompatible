@@ -15,11 +15,7 @@ class KongregatePlatform extends Platform {
 	    $config['api_host'] = 'http://www.kongregate.com/api'; 
 	  } 
 		$this->config = $config;
-		$game_items = $this->getGameItems();
-    foreach($game_items['items'] as $game_item){
-      $game_items[$game_item['name']] = $game_item['price'];
-    }
-		self::$KREDS_ITEMS = $game_items;
+		self::$KREDS_ITEMS = $this->getGameItems();
 	}
 
 	public function loadLibraries() {
@@ -209,7 +205,11 @@ class KongregatePlatform extends Platform {
 	}
 
 	protected function getGameItems() {
-		return self::getRemoteData("{$this->config['api_host']}/items.json?api_key={$this->config['app_secret']}&game_id={$this->config['app_id']}");
+		$game_items = self::getRemoteData("{$this->config['api_host']}/items.json?api_key={$this->config['app_secret']}&game_id={$this->config['app_id']}");
+		foreach($game_items['items'] as $game_item){
+      $game_items[$game_item['name']] = $game_item['price'];
+    }
+    return $game_items;
 	}
 
 	protected function getKredsInventory() {
