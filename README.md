@@ -45,7 +45,7 @@ The main example automatically requests the user item list from kongregate when 
 
 kreds_game.php example.
 
-link to transaction api docs.
+[transaction api docs](http://www.kongregate.com/developer_center/docs/microtransaction-client-api "Transaction API Docs")
 
 ## Testing
 
