@@ -1,41 +1,56 @@
 # synapse
 
-Putting a Facebook game on Kongregate as an iframe game.
+This api is setup for putting a Facebook game on Kongregate as an iframe game, or vice versa.
 
-Kongregate can serve games through your servers just like Facebook. Metal games, the producers of Tyrant, have given us some tips and code for handling both. With some small tweaks to your server, and some tweaks to your game, you can serve your game in both places.
+## Handling kongregate and facebook credentials.
 
-## Usage
-
-Handling kongregate and facebook credentials.
-
-Then you can get your game credentials from kongregate at /games/< username >/< game >/api. For the demo, you can put them in the top of index.php.
+You can get your Kongregate game credentials at /games/< username >/< game >/api. Then, depending on if the request is from Kongregate or Facebook, we will initialize our $platform differently. 
 
     if (isset($_REQUEST['platform']) && $_REQUEST['platform'] == "fb") {
-      …
+      ...
+      // put facebook credentials in $config
+      $platform = new FacebookPlatform($config);	
     } else {
-      require_once("KongregatePlatform.php");
-      $config['app_id'] = "<id>";
-      $config['app_secret'] = "<api_key>";
-      $config['app_root'] = "";
-      $config['server_root'] = "<wherever your server is>";
+      ...
+      // put kongregate credentials in $config
       $platform = new KongregatePlatform($config);
     }
+    
+Look at the top of index.php for an example.
 
-## Handling user login
+## Serving your game file
 
-The php api automatically shows a link to the kongregate login form if they aren’t logged in. You can change the content of this in kongregate_login.php. When they are successful, the example app just sends the user back to the main index.php.
+For flash games, you should customize the $platform->getFlashParams() function. These are the parameters to pass along to the flash game itself.
 
-From there, we can access $platform for kongregate and facebook, for getting the user name, or user items.
+    public function getFlashParams() {
+    	$params = "&user_id={$this->user}";
+    	return $params;
+    }
 
-## Handling microtransactions 
+Then you can display the flash file in the page with:
+    
+    $platform->displayFlashFile();
 
-You can make items on kongregate with [/games/<username>/<game>/items]
+## User login
 
-    //display a purchase button in the page
-    $platform->purchaseButton();
+The call to login a user is easy. If they aren't currently logged in with permissions to Kongregate or Facebook, they will be redirected to the login form.
+
+    $platform->login();
+    
+Once the user is logged in, we can access data through the $platform
+
+    $platform->getUserName();
+    $platform->getFriends(); //returns empty array for Kongregate
+
+## Microtransactions 
+
+Kongregate has a [microtransactions api](http://www.kongregate.com/developer_center/docs/microtransaction-client-api "Transaction API Docs").
+You can setup items for the api at /games/< username >/< game >/items
+    
+    $platform->getGameItems(); //gets an array returned by the api, as well as prices indexed by game_item name
 
     $data = $platform->getKredsInventory(); //api call to get the full inventory for a user
-    $data['items'] //an array of the items and ids
+    $data['items']
     
     $platform->updateInventory(); //use all the items
     
@@ -43,17 +58,18 @@ You can make items on kongregate with [/games/<username>/<game>/items]
 
 The main example automatically requests the user item list from kongregate when the page loads with $platform->$getKredsInventory.  On the server side, we are automatically marking all items as used when the user loads the page, in order to cash them in.
 
-kreds_game.php example.
+## Examples
 
-[transaction api docs](http://www.kongregate.com/developer_center/docs/microtransaction-client-api "Transaction API Docs")
+index.php is the basic example with login and microtransactions
 
 ## Testing
 
-None so far
+None so far, needs some phpunit.
 
 ## TODO
 
 * support more of the api
+* add tests
 
 ## Note on Patches/Pull Requests
 
