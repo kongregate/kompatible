@@ -1,6 +1,6 @@
 # synapse
 
-An api for hosting a game on both Kongregate and Facebook
+An api for hosting games on both Kongregate and Facebook
 
 ## Handling kongregate and facebook credentials.
 
