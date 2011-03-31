@@ -16,7 +16,49 @@ You can get your Kongregate game credentials at /games/< username >/< game >/api
       $platform = new KongregatePlatform($config);
     }
     
-Look at the top of index.php for an example.
+An examples of this is in index.php.
+
+## User login
+
+The call to login a user is easy. If they aren't currently logged in with permissions to Kongregate or Facebook, they will be redirected to the login form.
+
+    $platform->login();
+    
+Once the user is logged in, we can access data through the $platform
+
+    $platform->getUserName();
+    $platform->getFriends(); //returns empty array for Kongregate
+
+## Load the Site Specific API
+
+If your game needs to use the site specific javacript api (to submit stats, make purchase requests, etc) then we'll need to load those libraries:
+
+    $platform->loadLibraries();
+
+## Kongregate Microtransactions 
+
+KongregatePlatform.php is setup to check the api on first request to see if the user has purchased any items. 
+
+If they do, then we automatically marking all the items as used.
+
+First, we get a list of all our available items from the server. (/games/< username >/< game >/items)
+
+    $platform->getGameItems();
+
+We can get a users specific inventory:
+
+    $data = $platform->getKredsInventory();
+    $data['items']
+    
+If we want to mark all the items as used:
+
+    $platform->updateInventory();
+
+Or if we want to use a single item on page load:
+    
+    $platform->useKredItem($itemData);
+
+The Kongregate microtransaction docs are here: [microtransactions api](http://www.kongregate.com/developer_center/docs/microtransaction-client-api "Transaction API Docs").
 
 ## Serving your game file
 
@@ -31,45 +73,17 @@ Then you can display the flash file in the page with:
     
     $platform->displayFlashFile();
 
-## User login
-
-The call to login a user is easy. If they aren't currently logged in with permissions to Kongregate or Facebook, they will be redirected to the login form.
-
-    $platform->login();
-    
-Once the user is logged in, we can access data through the $platform
-
-    $platform->getUserName();
-    $platform->getFriends(); //returns empty array for Kongregate
-
-## Microtransactions 
-
-Kongregate has a [microtransactions api](http://www.kongregate.com/developer_center/docs/microtransaction-client-api "Transaction API Docs").
-You can setup items for the api at /games/< username >/< game >/items
-    
-    $platform->getGameItems(); //gets an array returned by the api, as well as prices indexed by game_item name
-
-    $data = $platform->getKredsInventory(); //api call to get the full inventory for a user
-    $data['items']
-    
-    $platform->updateInventory(); //use all the items
-    
-    $platform->useKredItem($itemData); //api call to use a single item
-
-The main example automatically requests the user item list from kongregate when the page loads with $platform->$getKredsInventory.  On the server side, we are automatically marking all items as used when the user loads the page, in order to cash them in.
-
 ## Examples
 
 index.php is the basic example with login and microtransactions
 
-## Testing
-
-None so far, needs some phpunit.
-
 ## TODO
 
-* support more of the api
-* add tests
+* Add a generic version of the FB request dialog calls.
+* Comments
+* Better demo of platform features
+* Styling
+* Add tests
 
 ## Note on Patches/Pull Requests
 
