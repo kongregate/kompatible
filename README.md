@@ -49,6 +49,14 @@ For flash games, you should customize the $platform->getFlashParams() function. 
 Then you can display the flash file in the page with:
 
     $platform->displayFlashFile();
+    
+## Getting friends
+
+For both apis, there is a function for getting the friends list:
+
+    $platform->getFriends();
+    
+which returns a similar array for both cases: ("friends" => array(array("name" => "username", "id" => "username")...))
 
 ## Kongregate Microtransactions 
 
