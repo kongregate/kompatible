@@ -1,0 +1,15 @@
+{
+  "facebook": {
+    "app_id": "",
+    "app_secret": "",
+    "app_root": "",
+    "server_root": ""
+  },
+  
+  "kongregate": {
+    "app_id": "",
+    "app_secret": "",
+    "app_root": "",
+    "server_root": ""
+  }
+}
