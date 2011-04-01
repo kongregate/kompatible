@@ -152,7 +152,13 @@ class KongregatePlatform extends Platform {
 	}
 
 	public function getFriends() {
-		return array();
+	  $apiCall = "{$this->config['api_host']}/user_info.json?api_key={$this->config['app_secret']}&user_id={$this->user}&game_auth_token={$this->game_auth_token}&friends=true";
+		$result = self::getRemoteData($apiCall);
+		$facebook_array = array();
+		foreach($result['friends'] as $friend){
+		  array_push($facebook_array, array("name" => $friend, "id" => $friend));
+	  }
+	  return array("data" => $facebook_array);
 	}
 
 	public function getFriendsAppUsers() {
