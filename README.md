@@ -2,6 +2,10 @@
 
 An api for hosting games on both Kongregate and Facebook. The full example is in index.php.
 
+Example app:
+[On Facebook](http://apps.facebook.com/kongregate_example/)
+[On Kongregate](http://www.kongregate.com/games/towski/facebook-example)
+
 ## Handling kongregate and facebook credentials.
 
 You'll need your application credentials from both Facebook and Kongregate. You can get your Kongregate game credentials at /games/< username >/< game >/api. Then, depending on if the request is from Kongregate or Facebook, we will initialize our $kompatible object differently. 
