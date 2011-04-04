@@ -56,7 +56,7 @@ For both apis, there is a function for getting the friends list:
 
     $kompatible->getFriends();
     
-which returns a similar array for both cases: ("friends" => array(array("name" => "username", "id" => "username")...))
+which returns a similar array for both cases: ("data" => array(array("name" => "username", "id" => "username")...))
 
 ## Kongregate Microtransactions 
 
