@@ -1,6 +1,6 @@
 # kompatible
 
-An api for hosting games on both Kongregate and Facebook
+An api for hosting games on both Kongregate and Facebook. The full example is in index.php.
 
 ## Handling kongregate and facebook credentials.
 
