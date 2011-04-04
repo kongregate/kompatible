@@ -22,7 +22,7 @@ In your Facebook configuration, you'll want to add ?platform=fb to the end of yo
 
 ## User login
 
-Then we'll want to make sure the user is logged in. If they aren't, they will be redirected to the login form.
+Then we'll want to make sure the user is logged in. If they aren't, they will be redirected to the site specific login form.
 
     $kompatible->login();
     
