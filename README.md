@@ -3,8 +3,8 @@
 An api for hosting games on both Kongregate and Facebook. The full example is in index.php.
 
 Example app:
-[On Facebook](http://apps.facebook.com/kongregate_example/)
-[On Kongregate](http://www.kongregate.com/games/towski/facebook-example)
+[on Facebook](http://apps.facebook.com/kongregate_example/)  |  
+[on Kongregate](http://www.kongregate.com/games/towski/facebook-example)
 
 ## Handling kongregate and facebook credentials.
 
