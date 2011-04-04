@@ -1,6 +1,11 @@
 <?php
 error_reporting(E_ALL);
-$config = json_decode(file_get_contents('config.json'), true);
+if(file_exists('config.json')){
+  $config = json_decode(file_get_contents('config.json'), true);
+} else {
+  print("put credentials in config.json");
+  die();
+}
 if (isset($_REQUEST['platform']) && $_REQUEST['platform'] == "fb") {
 	require_once("FacebookPlatform.php");
 	$platform = new FacebookPlatform($config['facebook']);	
