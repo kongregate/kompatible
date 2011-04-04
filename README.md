@@ -12,7 +12,7 @@ You'll need your application credentials from both Facebook and Kongregate. You 
       $kompatible = new KongregatePlatform($config['kongregate']);
     }
     
-I've added a configuration file, config.json.example, for convenience. 
+I've added a configuration file, config.json.example, for storing both credentials. 
 
 In your Facebook configuration, you'll want to add ?platform=fb to the end of your canvas address.
 
