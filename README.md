@@ -4,16 +4,16 @@ An api for hosting games on both Kongregate and Facebook
 
 ## Handling kongregate and facebook credentials.
 
-You'll need your application credentials from both Facebook and Kongregate. You can get your Kongregate game credentials at /games/< username >/< game >/api. Then, depending on if the request is from Kongregate or Facebook, we will initialize our $platform differently. 
+You'll need your application credentials from both Facebook and Kongregate. You can get your Kongregate game credentials at /games/< username >/< game >/api. Then, depending on if the request is from Kongregate or Facebook, we will initialize our $kompatible differently. 
 
     if (isset($_REQUEST['platform']) && $_REQUEST['platform'] == "fb") {
       ...
       // put facebook credentials in $config
-      $platform = new FacebookPlatform($config);	
+      $kompatible = new FacebookPlatform($config);	
     } else {
       ...
       // put kongregate credentials in $config
-      $platform = new KongregatePlatform($config);
+      $kompatible = new KongregatePlatform($config);
     }
     
 An example of this is in index.php.
@@ -24,22 +24,22 @@ In your Facebook configuration, you'll want to add ?platform=fb to the end of yo
 
 Then we'll want to make sure the user is logged in. If they aren't, they will be redirected to the login form.
 
-    $platform->login();
+    $kompatible->login();
     
-Once the user is logged in, we can access data through the $platform
+Once the user is logged in, we can access data through the $kompatible
 
-    $platform->getUserName();
-    $platform->getFriends(); //returns empty array for Kongregate
+    $kompatible->getUserName();
+    $kompatible->getFriends(); //returns empty array for Kongregate
 
 ## Load the Site Specific API
 
 If your game needs to use the site specific javacript api (to submit stats, make purchase requests, etc) then we'll need to load those libraries:
 
-    $platform->loadLibraries();
+    $kompatible->loadLibraries();
 
 ## Serving your game file
 
-For flash games, you should customize the $platform->getFlashParams() function. These are the parameters to pass along to the flash game itself.
+For flash games, you should customize the $kompatible->getFlashParams() function. These are the parameters to pass along to the flash game itself.
 
     public function getFlashParams() {
     	$params = "&user_id={$this->user}";
@@ -48,13 +48,13 @@ For flash games, you should customize the $platform->getFlashParams() function. 
 
 Then you can display the flash file in the page with:
 
-    $platform->displayFlashFile();
+    $kompatible->displayFlashFile();
     
 ## Getting friends
 
 For both apis, there is a function for getting the friends list:
 
-    $platform->getFriends();
+    $kompatible->getFriends();
     
 which returns a similar array for both cases: ("friends" => array(array("name" => "username", "id" => "username")...))
 
@@ -66,20 +66,20 @@ If they do, then we automatically marking all the items as used.
 
 First, we get a list of all our available items from the server. (/games/< username >/< game >/items)
 
-    $platform->getGameItems();
+    $kompatible->getGameItems();
 
 We can get a users specific inventory:
 
-    $data = $platform->getKredsInventory();
+    $data = $kompatible->getKredsInventory();
     $data['items']
     
 If we want to mark all the items as used:
 
-    $platform->updateInventory();
+    $kompatible->updateInventory();
 
 Or if we want to use a single item on page load:
     
-    $platform->useKredItem($itemData);
+    $kompatible->useKredItem($itemData);
 
 The Kongregate microtransaction docs are here: [microtransactions api](http://www.kongregate.com/developer_center/docs/microtransaction-client-api "Transaction API Docs").
 
