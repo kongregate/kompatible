@@ -62,7 +62,7 @@ which returns a similar array for both cases: ("data" => array(array("name" => "
 
 KongregatePlatform.php is setup to check the api on first request to see if the user has purchased any items. 
 
-If they do, then we automatically marking all the items as used.
+If they do, then we automatically mark all the items as used.
 
 First, we get a list of all our available items from the server. (/games/< username >/< game >/items)
 
