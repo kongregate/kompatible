@@ -7,16 +7,12 @@ An api for hosting games on both Kongregate and Facebook
 You'll need your application credentials from both Facebook and Kongregate. You can get your Kongregate game credentials at /games/< username >/< game >/api. Then, depending on if the request is from Kongregate or Facebook, we will initialize our $kompatible object differently. 
 
     if (isset($_REQUEST['platform']) && $_REQUEST['platform'] == "fb") {
-      ...
-      // put facebook credentials in $config
-      $kompatible = new FacebookPlatform($config);	
+      $kompatible = new FacebookPlatform($config['facebook']);	
     } else {
-      ...
-      // put kongregate credentials in $config
-      $kompatible = new KongregatePlatform($config);
+      $kompatible = new KongregatePlatform($config['kongregate']);
     }
     
-An example of this is in index.php.
+I've added a configuration file, config.json.example, for convenience. 
 
 In your Facebook configuration, you'll want to add ?platform=fb to the end of your canvas address.
 
