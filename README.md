@@ -1,4 +1,4 @@
-# synapse
+# kompatible
 
 An api for hosting games on both Kongregate and Facebook
 
