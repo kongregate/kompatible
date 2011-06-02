@@ -5,7 +5,7 @@ An api for hosting games on both Kongregate and Facebook. The full example is in
 Example app:
 [on Facebook](http://apps.facebook.com/kongregate_example/)  |  [on Kongregate](http://www.kongregate.com/games/towski/facebook-example)
 
-To use just the kongregate api library, see: KongregatePlatform.php
+To use just the kongregate api library, see: [KongregatePlatform.php](/KongregatePlatform.php)
 
 ## Handling kongregate and facebook credentials.
 
