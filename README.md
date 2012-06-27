@@ -1,28 +1,29 @@
 # kompatible
 
-An api for hosting games on both Kongregate and Facebook
+An api for hosting games on both Kongregate and Facebook. The full example is in index.php.
+
+Example app:
+[on Facebook](http://apps.facebook.com/kongregate_example/)  |  [on Kongregate](http://www.kongregate.com/games/towski/facebook-example)
+
+To use just the kongregate api library, see: [KongregatePlatform.php](kompatible/blob/master/KongregatePlatform.php)
 
 ## Handling kongregate and facebook credentials.
 
-You'll need your application credentials from both Facebook and Kongregate. You can get your Kongregate game credentials at /games/< username >/< game >/api. Then, depending on if the request is from Kongregate or Facebook, we will initialize our $kompatible differently. 
+You'll need your application credentials from both Facebook and Kongregate. You can get your Kongregate game credentials at /games/< username >/< game >/api. Then, depending on if the request is from Kongregate or Facebook, we will initialize our $kompatible object differently. 
 
     if (isset($_REQUEST['platform']) && $_REQUEST['platform'] == "fb") {
-      ...
-      // put facebook credentials in $config
-      $kompatible = new FacebookPlatform($config);	
+      $kompatible = new FacebookPlatform($config['facebook']);	
     } else {
-      ...
-      // put kongregate credentials in $config
-      $kompatible = new KongregatePlatform($config);
+      $kompatible = new KongregatePlatform($config['kongregate']);
     }
     
-An example of this is in index.php.
+I've added a configuration file, config.json.example, for storing both credentials. 
 
-In your Facebook configuration, you'll want to add ?platform=fb to the end of your canvas address.
+In your Facebook app settings, you'll want to add ?platform=fb to the end of your canvas address.
 
 ## User login
 
-Then we'll want to make sure the user is logged in. If they aren't, they will be redirected to the login form.
+Then we'll want to make sure the user is logged in. If they aren't, they will be redirected to the site specific login form.
 
     $kompatible->login();
     
@@ -62,7 +63,7 @@ which returns a similar array for both cases: ("data" => array(array("name" => "
 
 KongregatePlatform.php is setup to check the api on first request to see if the user has purchased any items. 
 
-If they do, then we automatically marking all the items as used.
+If they do, then we automatically mark all the items as used.
 
 First, we get a list of all our available items from the server. (/games/< username >/< game >/items)
 
