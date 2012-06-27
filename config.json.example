@@ -2,14 +2,14 @@
   "facebook": {
     "app_id": "",
     "app_secret": "",
-    "app_root": "",
-    "server_root": ""
+    "app_root": "http://kongregate.phpfogapp.com/?platform=fb",
+    "server_root": "http://kongregate.phpfogapp.com/"
   },
   
   "kongregate": {
     "app_id": "",
     "app_secret": "",
-    "app_root": "",
-    "server_root": ""
+    "app_root": "http://www.kongregate.com/games/towski/facebook-example?guest_access_key=burgers",
+    "server_root": "http://kongregate.phpfogapp.com/"
   }
 }
